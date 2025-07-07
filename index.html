@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>MIS LIBROS FAVORITOS</h1>
+    <h3>Añadir nuevo libro</h3>
+    <form id="add-book-form">
+        <input type="text" id="title" placeholder="Título" required />
+        <input type="text" id="writer" placeholder="Autor/a" required />
+        <textarea id="book_description" placeholder="Descripción" required></textarea>
+        <button type="submit">Guardar libro</button>
+    </form>
+    <button onclick="printBooks()">Cargar información</button>
+    <section id="book-section">
+
+    </section>
+    <script src="src/services.js"></script>
+</body>
+</html>
