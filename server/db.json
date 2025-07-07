@@ -17,6 +17,12 @@
       "writer": "Carlos Ruiz Zafón",
       "book_description": "Historia sobre un romance y tragedia en la antigua Barcelona",
       "id": "7ca4"
+    },
+    {
+      "id": "e466",
+      "title": "Cien años de soledad",
+      "writer": "Gabriel García Marquez",
+      "book_description": "La familia de los Buendía a lo largo de los años"
     }
   ]
 }

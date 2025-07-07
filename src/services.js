@@ -40,7 +40,7 @@ async function deleteBook(id){
 //imprimir
 let booksContainer = document.getElementById("book-section")
 async function printBooks(){
-    console.log("Hola!")
+    
     let listBooks = await getBooks();
     const printBookList = listBooks.map(book =>{
         return booksContainer.innerHTML += `<h2>${book.title}</h2>
