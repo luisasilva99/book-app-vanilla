@@ -21,9 +21,37 @@ async function getBooks() {
     return bookData 
 }
 console.log(getBooks())
-//Update método PUT
-function updateBook(id, editedBook) {
 
+//Update método PUT
+
+async function updateBook(id, editedBook) {
+    const response = await fetch(`http://127.0.0.1:3000/books/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(editedBook)
+    });
+
+    if (response.ok) {
+        console.log(`Libro con ID ${id} actualizado`);
+        printBooks(); // Vuelve a mostrar los libros actualizados
+    } else {
+        console.error("Error al actualizar el libro");
+    }
+}
+function editBookPrompt(book) {
+    const newTitle = prompt("Nuevo título:", book.title);
+    const newWriter = prompt("Nuevo autor:", book.writer);
+    const newDescription = prompt("Nueva descripción:", book.book_description);
+
+    const editedBook = {
+        title: newTitle,
+        writer: newWriter,
+        book_description: newDescription
+    };
+
+    updateBook(book.id, editedBook);
 }
 //Detele método DELETE
 async function deleteBook(id){
@@ -38,18 +66,23 @@ async function deleteBook(id){
     }
 }
 //imprimir
-let booksContainer = document.getElementById("book-section")
-async function printBooks(){
-    
+let booksContainer = document.getElementById("book-section");
+
+async function printBooks() {
     let listBooks = await getBooks();
-    const printBookList = listBooks.map(book =>{
-        return booksContainer.innerHTML += `<h2>${book.title}</h2>
-        <p>${book.writer}</p>
-        <p>${book.book_description}</p>
-        <button onclick="deleteBook('${book.id}')">Eliminar</button>`
+    booksContainer.innerHTML = ""; // Limpiar antes de volver a renderizar
+
+    listBooks.forEach(book => {
+        booksContainer.innerHTML += `
+            <h2>${book.title}</h2>
+            <p>${book.writer}</p>
+            <p>${book.book_description}</p>
+            <button onclick="deleteBook('${book.id}')">Eliminar</button>
+            <button onclick='editBookPrompt(${JSON.stringify(book)})'>Editar</button>
+        `;
     });
-    return printBookList                                  
 }
+
 // Escuchar envío del formulario
 const form = document.getElementById("add-book-form");
 form.addEventListener("submit", async (event) => {
