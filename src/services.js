@@ -25,7 +25,7 @@ console.log(getBooks())
 //Update método PUT
 
 async function updateBook(id, editedBook) {
-    const response = await fetch(`http://127.0.0.1:3000/books/${id}`, {
+    const response = await fetch(`http://localhost:3000/books/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -41,9 +41,16 @@ async function updateBook(id, editedBook) {
     }
 }
 function editBookPrompt(book) {
+    console.log("Editando libro:", book); // Debug
+
     const newTitle = prompt("Nuevo título:", book.title);
     const newWriter = prompt("Nuevo autor:", book.writer);
     const newDescription = prompt("Nueva descripción:", book.book_description);
+
+    if (!newTitle || !newWriter || !newDescription) {
+        alert("Todos los campos son obligatorios.");
+        return;
+    }
 
     const editedBook = {
         title: newTitle,
@@ -73,13 +80,23 @@ async function printBooks() {
     booksContainer.innerHTML = ""; // Limpiar antes de volver a renderizar
 
     listBooks.forEach(book => {
-        booksContainer.innerHTML += `
+        const bookElement = document.createElement("div");
+
+        bookElement.innerHTML = `
             <h2>${book.title}</h2>
             <p>${book.writer}</p>
             <p>${book.book_description}</p>
-            <button onclick="deleteBook('${book.id}')">Eliminar</button>
-            <button onclick='editBookPrompt(${JSON.stringify(book)})'>Editar</button>
+            <button class="delete-btn">Eliminar</button>
+            <button class="edit-btn">Editar</button>
         `;
+
+        const deleteBtn = bookElement.querySelector(".delete-btn");
+        deleteBtn.addEventListener("click", () => deleteBook(book.id));
+
+        const editBtn = bookElement.querySelector(".edit-btn");
+        editBtn.addEventListener("click", () => editBookPrompt(book));
+
+         booksContainer.appendChild(bookElement);
     });
 }
 
