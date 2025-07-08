@@ -66,27 +66,27 @@ async function printBooks() {
     });
 }
 
-// Escuchar envío del formulario
+// Escuchar envío del formulario para añadir libro
 const form = document.getElementById("add-book-form");
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const newBook = {
-        title: document.getElementById("title").value,
-        writer: document.getElementById("writer").value,
-        book_description: document.getElementById("book_description").value
-    };
-    await createBook(newBook);
-    form.reset();
-    printBooks();
-});
-
+if (form) {
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const newBook = {
+            title: document.getElementById("title").value,
+            writer: document.getElementById("writer").value,
+            book_description: document.getElementById("book_description").value
+        };
+        await createBook(newBook);
+        form.reset();
+        printBooks();
+    });
+}
 
 // MODAL PARA EDITAR //
 const modal = document.getElementById("edit-modal");
 const titleInput = document.getElementById("edit-title");
 const writerInput = document.getElementById("edit-writer");
 const descInput = document.getElementById("edit-description");
-const saveEditBtn = document.getElementById("save-edit");
 
 let currentEditId = null;
 
@@ -103,18 +103,30 @@ function closeModal() {
     currentEditId = null;
 }
 
-saveEditBtn.addEventListener("click", () => {
-    if (!currentEditId) return;
+// Escuchar envío del formulario de edición para actualizar libro
+const editForm = document.getElementById("edit-form");
+if (editForm) {
+    editForm.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-    const editedBook = {
-        title: titleInput.value,
-        writer: writerInput.value,
-        book_description: descInput.value
-    };
+        if (!currentEditId) return;
 
-    updateBook(currentEditId, editedBook);
-    closeModal();
-});
+        const editedBook = {
+            title: titleInput.value,
+            writer: writerInput.value,
+            book_description: descInput.value
+        };
+
+        updateBook(currentEditId, editedBook);
+        closeModal();
+    });
+}
+
+// Botón cancelar en modal para cerrar
+const cancelEditBtn = document.getElementById("cancel-edit-btn");
+if (cancelEditBtn) {
+    cancelEditBtn.addEventListener("click", closeModal);
+}
 
 // Cierra modal al hacer clic fuera del contenido
 window.addEventListener("click", (e) => {
