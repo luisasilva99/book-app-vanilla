@@ -96,7 +96,7 @@ function showEditModal(book) {
     titleInput.value = book.title;
     writerInput.value = book.writer;
     descInput.value = book.book_description;
-    modal.style.display = "flex"; // Asegúrate de que en CSS .modal usa flexbox
+    modal.style.display = "flex"; 
 }
 
 function closeModal() {
