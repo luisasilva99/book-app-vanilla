@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "api-fake": "json-server --watch server/db.json" 
-  },
+    "api-fake": "json-server --watch server/db.json --port 3003"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -1,4 +1,4 @@
-const apiURL = "http://localhost:3000/books";
+const apiURL = "http://localhost:3003/books";
 let booksContainer = document.getElementById("book-section");
 
 // CREATE (POST)
@@ -66,7 +66,7 @@ async function printBooks() {
     });
 }
 
-// Escuchar envío del formulario de añadir libro
+// Escuchar envío del formulario
 const form = document.getElementById("add-book-form");
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -86,8 +86,7 @@ const modal = document.getElementById("edit-modal");
 const titleInput = document.getElementById("edit-title");
 const writerInput = document.getElementById("edit-writer");
 const descInput = document.getElementById("edit-description");
-const editForm = document.getElementById("edit-form");
-const cancelBtn = document.getElementById("cancel-edit-btn");
+const saveEditBtn = document.getElementById("save-edit");
 
 let currentEditId = null;
 
@@ -96,7 +95,7 @@ function showEditModal(book) {
     titleInput.value = book.title;
     writerInput.value = book.writer;
     descInput.value = book.book_description;
-    modal.style.display = "flex"; 
+    modal.style.display = "flex";
 }
 
 function closeModal() {
@@ -104,10 +103,7 @@ function closeModal() {
     currentEditId = null;
 }
 
-// Enviar cambios desde el modal
-editForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
+saveEditBtn.addEventListener("click", () => {
     if (!currentEditId) return;
 
     const editedBook = {
@@ -116,14 +112,11 @@ editForm.addEventListener("submit", async (e) => {
         book_description: descInput.value
     };
 
-    await updateBook(currentEditId, editedBook);
+    updateBook(currentEditId, editedBook);
     closeModal();
 });
 
-// Cancelar edición
-cancelBtn.addEventListener("click", closeModal);
-
-// Cerrar modal al hacer clic fuera del contenido
+// Cierra modal al hacer clic fuera del contenido
 window.addEventListener("click", (e) => {
     if (e.target === modal) {
         closeModal();

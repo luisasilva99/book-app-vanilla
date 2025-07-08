@@ -73,12 +73,12 @@ button:hover {
 
 #book-section button:last-child {
     background-color: #27ae60;
-}
+ }
 
-#book-section button:hover {
-    filter: brightness(90%);
-}
-.modal {
+    #book-section button:hover {
+      filter: brightness(90%);
+    }
+    .modal {
   position: fixed;
   top: 0;
   left: 0;
