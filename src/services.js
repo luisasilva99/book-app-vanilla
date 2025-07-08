@@ -1,123 +1,131 @@
-//Create método POST
+const apiURL = "http://localhost:3000/books";
+let booksContainer = document.getElementById("book-section");
+
+// CREATE (POST)
 async function createBook(newBook) {
-    await fetch("http://localhost:3000/books", {
+    await fetch(apiURL, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newBook)
     });
 }
-//Read método GET
+
+// READ (GET)
 async function getBooks() {
-    const response = await fetch("http://localhost:3000/books", {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    const bookData = await response.json()
-    console.log(bookData)
-    return bookData 
+    const response = await fetch(apiURL);
+    const data = await response.json();
+    return data;
 }
-console.log(getBooks())
 
-//Update método PUT
-
+// UPDATE (PUT)
 async function updateBook(id, editedBook) {
-    const response = await fetch(`http://localhost:3000/books/${id}`, {
+    const response = await fetch(`${apiURL}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editedBook)
     });
 
     if (response.ok) {
         console.log(`Libro con ID ${id} actualizado`);
-        printBooks(); // Vuelve a mostrar los libros actualizados
+        printBooks();
     } else {
         console.error("Error al actualizar el libro");
     }
 }
-function editBookPrompt(book) {
-    console.log("Editando libro:", book); // Debug
 
-    const newTitle = prompt("Nuevo título:", book.title);
-    const newWriter = prompt("Nuevo autor:", book.writer);
-    const newDescription = prompt("Nueva descripción:", book.book_description);
-
-    if (!newTitle || !newWriter || !newDescription) {
-        alert("Todos los campos son obligatorios.");
-        return;
-    }
-
-    const editedBook = {
-        title: newTitle,
-        writer: newWriter,
-        book_description: newDescription
-    };
-
-    updateBook(book.id, editedBook);
-}
-//Detele método DELETE
-async function deleteBook(id){
-    const response = await fetch(`http://localhost:3000/books/${id}`, {
-        method: "DELETE"
-    })
+// DELETE
+async function deleteBook(id) {
+    const response = await fetch(`${apiURL}/${id}`, { method: "DELETE" });
     if (response.ok) {
         console.log(`Libro con ID ${id} eliminado`);
-        printBooks()
+        printBooks();
     } else {
-        console.log(`Libro con ID ${id} eliminado`);
+        console.error(`No se pudo eliminar el libro con ID ${id}`);
     }
 }
-//imprimir
-let booksContainer = document.getElementById("book-section");
 
+// Mostrar libros en pantalla
 async function printBooks() {
-    let listBooks = await getBooks();
-    booksContainer.innerHTML = ""; // Limpiar antes de volver a renderizar
+    const books = await getBooks();
+    booksContainer.innerHTML = "";
 
-    listBooks.forEach(book => {
+    books.forEach(book => {
         const bookElement = document.createElement("div");
-
         bookElement.innerHTML = `
             <h2>${book.title}</h2>
-            <p>${book.writer}</p>
+            <p><strong>Autor:</strong> ${book.writer}</p>
             <p>${book.book_description}</p>
             <button class="delete-btn">Eliminar</button>
             <button class="edit-btn">Editar</button>
         `;
 
-        const deleteBtn = bookElement.querySelector(".delete-btn");
-        deleteBtn.addEventListener("click", () => deleteBook(book.id));
+        bookElement.querySelector(".delete-btn").addEventListener("click", () => deleteBook(book.id));
+        bookElement.querySelector(".edit-btn").addEventListener("click", () => showEditModal(book));
 
-        const editBtn = bookElement.querySelector(".edit-btn");
-        editBtn.addEventListener("click", () => editBookPrompt(book));
-
-         booksContainer.appendChild(bookElement);
+        booksContainer.appendChild(bookElement);
     });
 }
 
-// Escuchar envío del formulario
+// Escuchar envío del formulario de añadir libro
 const form = document.getElementById("add-book-form");
-form.addEventListener("submit", async (event) => {
-    event.preventDefault(); // Evita que se recargue la página
-
-    // Obtener los valores del formulario
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
     const newBook = {
         title: document.getElementById("title").value,
         writer: document.getElementById("writer").value,
         book_description: document.getElementById("book_description").value
     };
-
-    // Crear el nuevo libro
     await createBook(newBook);
-
-    // Limpiar el formulario
     form.reset();
-
-    // Volver a imprimir los libros
     printBooks();
+});
+
+
+// MODAL PARA EDITAR //
+const modal = document.getElementById("edit-modal");
+const titleInput = document.getElementById("edit-title");
+const writerInput = document.getElementById("edit-writer");
+const descInput = document.getElementById("edit-description");
+const editForm = document.getElementById("edit-form");
+const cancelBtn = document.getElementById("cancel-edit-btn");
+
+let currentEditId = null;
+
+function showEditModal(book) {
+    currentEditId = book.id;
+    titleInput.value = book.title;
+    writerInput.value = book.writer;
+    descInput.value = book.book_description;
+    modal.style.display = "flex"; // Asegúrate de que en CSS .modal usa flexbox
+}
+
+function closeModal() {
+    modal.style.display = "none";
+    currentEditId = null;
+}
+
+// Enviar cambios desde el modal
+editForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!currentEditId) return;
+
+    const editedBook = {
+        title: titleInput.value,
+        writer: writerInput.value,
+        book_description: descInput.value
+    };
+
+    await updateBook(currentEditId, editedBook);
+    closeModal();
+});
+
+// Cancelar edición
+cancelBtn.addEventListener("click", closeModal);
+
+// Cerrar modal al hacer clic fuera del contenido
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
 });

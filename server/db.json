@@ -1,22 +1,60 @@
 {
   "books": [
     {
-      "id": "1",
       "title": "El lenguaje secreto de la naturaleza",
       "writer": "Oscar S. Aranda",
-      "book_description": "Este libro es un viaje que nos llevará por maravillosos lugares alrededor del mundo para conocer de cerca a seres que, al igual que nosotros, tienen familia, emociones, enfrentan desafíos, toman decisiones y crean alianzas"
+      "book_description": "Este libro es un viaje que nos llevará por maravillosos lugares alrededor del mundo para conocer de cerca a seres que, al igual que nosotros, tienen familia, emociones, enfrentan desafíos, toman decisiones y crean alianzas",
+      "id": "1"
     },
-    {
-      "id": "2",
-      "title": "The Photo Ark",
-      "writer": "Joel Sartore",
-      "book_description": "El proyecto Photo Ark de National Geographic, dirigido por el fotógrafo Joel Sartore, es una iniciativa para documentar a todas las especies que viven en zoos y santuarios de fauna salvaje, inspirar acciones a través de la educación y ayudar a salvar a los animales apoyando iniciativas de conservación sobre el terreno."
-    },
-    {
-      "title": "La sombra del viento",
-      "writer": "Carlos Ruiz Zafón",
-      "book_description": "Historia sobre un romance y tragedia en la antigua Barcelona",
-      "id": "7ca4"
-    }
+     {
+    "title": "El corazón helado",
+    "writer": "Almudena Grandes",
+    "book_description": "Una saga familiar que conecta la Guerra Civil española con la España contemporánea."
+  },
+  {
+    "title": "La ridícula idea de no volver a verte",
+    "writer": "Rosa Montero",
+    "book_description": "Un homenaje a Marie Curie que se convierte en una meditación personal sobre la pérdida y el duelo."
+  },
+  {
+    "title": "Lectura fácil",
+    "writer": "Cristina Morales",
+    "book_description": "Cuatro mujeres con diversidad funcional se rebelan contra el sistema en una novela crítica y provocadora."
+  },
+  {
+    "title": "Pan de limón con semillas de amapola",
+    "writer": "Cristina Campos",
+    "book_description": "Dos hermanas separadas se reencuentran tras heredar una panadería en Mallorca."
+  },
+  {
+    "title": "La trabajadora",
+    "writer": "Elvira Navarro",
+    "book_description": "Una novela sobre la precariedad laboral, la ansiedad y la salud mental en la España actual."
+  },
+  {
+    "title": "Memoria de la melancolía",
+    "writer": "María Teresa León",
+    "book_description": "Autobiografía conmovedora de una intelectual comprometida durante la Guerra Civil española."
+  },
+  {
+    "title": "Nosotras que nos queremos tanto",
+    "writer": "Marcela Serrano",
+    "book_description": "Retrato de cuatro mujeres unidas por la amistad y por la búsqueda de su lugar en el mundo."
+  },
+  {
+    "title": "Panza de burro",
+    "writer": "Andrea Abreu",
+    "book_description": "Historia de amistad entre dos niñas en un pueblo del norte de Tenerife con una prosa poética y oral."
+  },
+  {
+    "title": "Las maravillas",
+    "writer": "Elena Medel",
+    "book_description": "Una mirada a la desigualdad social y de género a través de la vida de dos mujeres de distintas generaciones."
+  },
+  {
+    "title": "Los ojos vendados",
+    "writer": "María Zambrano",
+    "book_description": "Una novela filosófica sobre la conciencia, la identidad y la búsqueda interior."
+  }
   ]
 }
